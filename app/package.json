@@ -1,0 +1,33 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "philipa debem",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bull": "^3.21.0",
+    "date-fns": "^3.3.1",
+    "express": "^4.17.1",
+    "ioredis": "^5.3.2",
+    "kafkajs": "^1.15.0",
+    "mysql2": "^2.3.0",
+    "redis": "^4.6.13",
+    "sequelize": "^6.6.5"
+  },
+  "keywords": [
+    "bank"
+  ],
+  "author": "philmaxsnr@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "istanbul-api": "^3.0.0",
+    "istanbul-lib-coverage": "^3.2.2",
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "nyc": "^15.1.0",
+    "supertest": "^6.3.4"
+  }
+}
