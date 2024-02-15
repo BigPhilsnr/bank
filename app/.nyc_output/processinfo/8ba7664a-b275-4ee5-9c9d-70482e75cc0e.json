@@ -1,0 +1,1 @@
+{"parent":"83605ccf-d98d-488e-8ded-3dda8b48d3c3","pid":407,"argv":["/usr/local/bin/node","/app/node_modules/jest-worker/build/workers/processChild.js"],"execArgv":[],"cwd":"/app","time":1708002931059,"ppid":30,"coverageFilename":"/app/.nyc_output/8ba7664a-b275-4ee5-9c9d-70482e75cc0e.json","externalId":"","uuid":"8ba7664a-b275-4ee5-9c9d-70482e75cc0e","files":[]}

@@ -1,1 +1,0 @@
-{"parent":null,"pid":30,"argv":["/usr/local/bin/node","/app/node_modules/.bin/jest","--coverage"],"execArgv":[],"cwd":"/app","time":1708000253135,"ppid":19,"coverageFilename":"/app/.nyc_output/320935bc-9f61-45d3-9ebe-e0c9b228441a.json","externalId":"","uuid":"320935bc-9f61-45d3-9ebe-e0c9b228441a","files":[]}
