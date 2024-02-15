@@ -2,6 +2,8 @@
 
 This is a simple banking application built with Node.js, Express, Sequelize, Redis, Kafka, and Docker.
 
+
+
 ## Technologies Used
 
 - Node.js
@@ -30,14 +32,15 @@ Before running the application, ensure you have the following installed:
 
 To run tests and generate code coverage, use the following command:
 
- ```
+
     docker-compose run test npm test
-    ```
+    
+
 
 
 This will run both unit tests and API tests and generate a code coverage report.
 
-## Design
+## Testing and Code Coverage
 
 - The application uses Sequelize as an ORM for MySQL database interactions.
 - Kafka is utilized for handling events related to deposits and withdrawals.
