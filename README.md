@@ -15,7 +15,7 @@ This is a simple banking application built with Node.js, Express, Sequelize, Red
 
 Before running the application, ensure you have the following installed:
 - Docker
-- Ensure no application is running on port on default port 4500, or modify by adding PORT= <PORT_NUMBER>  in app/.env :
+- Ensure no application is running on default port 4500, or modify by adding PORT= <PORT_NUMBER>  in app/.env :
 
 ## Setup
 
