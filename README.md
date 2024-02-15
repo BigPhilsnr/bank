@@ -48,7 +48,7 @@ This will run both unit tests and API tests and generate a code coverage report.
 Feel free to explore the codebase for more details on the application's architecture and features.
 
 
-# Bank Application - Schema Relationships
+**## Bank Application - Schema Relationships**
 
 In the bank application, there are three main schemas: `Customer`, `Account`, and `Transaction`. Let's explore how these schemas are related in a typical process flow.
 
