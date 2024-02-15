@@ -4,8 +4,8 @@
   "description": "philipa debem",
   "main": "app.js",
   "scripts": {
-    "test": "npx nyc --reporter=lcov --reporter=text-summary jest --coverage",
-    "test:coverage": "jest --coverage"
+    "test": "jest",
+    "coverage": "npx nyc --reporter=lcov --reporter=text-summary jest --coverage"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
