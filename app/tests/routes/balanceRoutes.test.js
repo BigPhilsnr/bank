@@ -16,7 +16,7 @@ test('Deposit controller sends deposit request to Kafka producer', async () => {
   await deposit(mockReq, mockRes);
 
   expect(producer.send).toHaveBeenCalledWith({
-    topic: 'deposit_topic',
+    topic: 'dtopoic',
     messages: [{ value: JSON.stringify(mockReq.body) }],
   });
 
@@ -32,7 +32,7 @@ test('Withdraw controller sends withdrawal request to Kafka producer', async () 
   await withdraw(mockReq, mockRes);
 
   expect(producer.send).toHaveBeenCalledWith({
-    topic: 'withdrawal_topic',
+    topic: 'wtopoic',
     messages: [{ value: JSON.stringify(mockReq.body) }],
   });
 

@@ -10,8 +10,10 @@ COPY package*.json ./
 
 
 RUN npm install -g nodemon
+RUN npm install -g pm2
 RUN npm install
 
+EXPOSE 4500
 COPY . .
 
 # # Wait for MySQL and Kafka to be ready before starting the application

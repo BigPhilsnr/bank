@@ -16,34 +16,23 @@ async function deposit(req, res) {
   if (!isValid) {
     return res.status(400).json({ error: errorMessage });
   }
+  
 
-
-
-  if (!producer.isConnected()) {
-    producer.connect()
-  } else {
-    console.log("Producer is connected")
-  }
-
-  const messagePayload = JSON.stringify({
-    customer_id: req.body.customer_id,
-    account_id: req.body.account_id,
-    amount,
+  await producer.send({
+    topic: "dtopoic",
+    messages: [
+      {
+        value: JSON.stringify({
+          customer_id: req.body.customer_id,
+          account_id: req.body.account_id,
+          amount,
+        }),
+      },
+    ],
   });
 
-
-
-  // Produce a message to the 'deposit_topic' topic
-  producer.produce('deposit_topic', null, Buffer.from(messagePayload), null, Date.now());
-  if (!producer.isConnected()) {
-    producer.connect()
-  } else {
-    console.log("Producer is connected")
-  }
-
-
   res.json({ message: "Deposit request received. Processing..." });
-
+  
 }
 
 async function withdraw(req, res) {
@@ -75,29 +64,18 @@ async function withdraw(req, res) {
     return res.status(400).json({ error: errorMessage });
   }
 
-
-
-  // Produce a message to the 'withdrawal_topic' topic
-
-  if (!producer.isConnected()) {
-    producer.connect()
-  }
-  const messagePayload = JSON.stringify({
-    customer_id: req.body.customer_id,
-    account_id: req.body.account_id,
-    amount,
+  await producer.send({
+    topic: "wtopoic",
+    messages: [
+      {
+        value: JSON.stringify({
+          customer_id: req.body.customer_id,
+          account_id,
+          amount,
+        }),
+      },
+    ],
   });
-
-  // Produce a message to the 'withdrawal_topic' topic
-  producer.produce('withdrawal_topic', null, Buffer.from(messagePayload), null, Date.now());
- 
- // Event handler for the ready event
- 
-  // Event handler for the event.error event
-  producer.on('event.error', (err) => {
-    console.error('Error from producer:', err);
-  });
-
 
   res.json({ message: "Withdrawal request received. Processing..." });
 }

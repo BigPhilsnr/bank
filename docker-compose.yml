@@ -15,6 +15,8 @@ services:
     image: wurstmeister/kafka:2.13-2.8.1
     ports:
       - "9092:9092"
+    expose:
+    - "9093"
     environment:
       KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
@@ -22,7 +24,9 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_MESSAGE_MAX_BYTES: 2000000000
-     
+      KAFKA_DELETE_TOPIC_ENABLE: 'true'
+      KAFKA_CREATE_TOPICS: "dtopoic:1:1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -40,6 +44,7 @@ services:
 
   web:
     build: .
+    working_dir: /app
     ports:
       - "4500:4500"
     volumes:
@@ -49,6 +54,24 @@ services:
       - mysql
       - redis
       - kafka
-    command: ["wait-for-it", "mysql:3306", "--", "wait-for-it", "kafka:9092", "--", "nodemon" ]
+      - test
+    command: >
+      sh -c "npm install -g pm2
+      && npm install
+      && wait-for-it mysql:3306 -- wait-for-it kafka:9092 -- pm2-runtime start ecosystem.config.js"
+   
+  test:
+    build: .
+    working_dir: /app
+    ports:
+      - "4600:4500"
+    volumes:
+      - ./app:/app
+      - ./wait-for-it.sh:/scripts/wait-for-it.sh
+    depends_on:
+      - mysql
+      - redis
+      - kafka
+    command: ["wait-for-it", "mysql:3306", "--", "wait-for-it", "kafka:9092", "--" , "npm", "install"]
  
       
