@@ -2,6 +2,8 @@
 
 This is a simple banking application built with Node.js, Express, Sequelize, Redis, Kafka, and Docker.
 
+![Alt Text](https://github.com/BigPhilsnr/bank/blob/main/screenshot.png?raw=true)
+
 
 
 ## Technologies Used
