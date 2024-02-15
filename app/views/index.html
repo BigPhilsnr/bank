@@ -119,12 +119,10 @@
       let customerId;
       let accountId;
 
-      // Function to fetch and display balance
       async function fetchBalance() {
         try {
-          const response = await fetch(
-            `http://localhost:4500/balance?account_id=${accountId}`
-          );
+          const url = `${window.location.protocol}//${window.location.host}/balance?account_id=${accountId}`;
+          const response = await fetch(url);
           const data = await response.json();
           document.getElementById(
             "balance"
@@ -133,17 +131,18 @@
           console.error("Error fetching balance:", error.message);
         }
       }
-
+    
       // Function to create account
       async function createAccount() {
         try {
-          const response = await fetch("http://localhost:4500/customer/seed");
+          const url = `${window.location.protocol}//${window.location.host}/customer/seed`;
+          const response = await fetch(url);
           const data = await response.json();
-
+    
           // Store customer and account details
           customerId = data.customerId;
           accountId = data.accountId;
-
+    
           // Display customer details
           document.getElementById(
             "customerId"
@@ -151,21 +150,21 @@
           document.getElementById(
             "accountId"
           ).textContent = `Account ID: ${accountId}`;
-
+    
           // Hide create account button and reveal the main interface
           document.getElementById("createAccountButton").style.display = "none";
           document.getElementById("customerDetails").style.display = "block";
           document.getElementById("mainInterface").style.display = "table";
-
+    
           // Fetch and display balance after creating account
           fetchBalance();
         } catch (error) {
           console.error("Error creating account:", error.message);
           document.getElementById("error").textContent =
-            "Error creating account. Please try again later.";
+            "Error creating an account. Please try again later.";
         }
       }
-
+    
       // Function to handle deposit
       async function deposit() {
         const amountInput = document.getElementById("amountInput");
@@ -173,9 +172,10 @@
         if (!validateAmount(amount, 40000, 4, 150000)) {
           return;
         }
-
+    
         try {
-         const response =  await fetch("http://localhost:4500/transaction/deposit", {
+          const url = `${window.location.protocol}//${window.location.host}/transaction/deposit`;
+          const response = await fetch(url, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -186,14 +186,14 @@
               amount: parseInt(amount),
             }),
           });
-
+    
           // Clear input text after deposit
           amountInput.value = "";
-
+    
           // Refresh balance after deposit
           fetchBalance();
-          const data = await response.json()
-          console.log(data)
+          const data = await response.json();
+          console.log(data);
           document.getElementById("error").textContent = data.message || data.error; // Clear any previous errors
         } catch (error) {
           console.error("Error depositing:", error.message);
@@ -201,7 +201,7 @@
             "Error depositing. Please try again later.";
         }
       }
-
+    
       // Function to handle withdrawal
       async function withdraw() {
         const amountInput = document.getElementById("amountInput");
@@ -209,9 +209,10 @@
         if (!validateAmount(amount, 20000, 3, 50000)) {
           return;
         }
-
+    
         try {
-         const response =  await fetch("http://localhost:4500/transaction/withdraw", {
+          const url = `${window.location.protocol}//${window.location.host}/transaction/withdraw`;
+          const response = await fetch(url, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -222,15 +223,15 @@
               amount: parseInt(amount),
             }),
           });
-
+    
           // Clear input text after withdrawal
           amountInput.value = "";
-
+    
           // Refresh balance after withdrawal
           fetchBalance();
           document.getElementById("error").textContent = ""; // Clear any previous errors
           const data = await response.json();
-          document.getElementById("error").textContent = data.message || data.error
+          document.getElementById("error").textContent = data.message || data.error;
         } catch (error) {
           console.error("Error withdrawing:", error.message);
           document.getElementById("error").textContent =

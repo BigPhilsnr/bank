@@ -59,7 +59,7 @@ async function startQueueWorker() {
   });
 
  const res=  await queue.isReady();
- console.log("REDIS QUEUE IS HAS STARTED")
+ console.log("REDIS QUEUE IS HAS STARTED", res.status)
 }
 
 async function handleWithdrawalEvent(message) {

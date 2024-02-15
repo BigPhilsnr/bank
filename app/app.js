@@ -18,6 +18,11 @@ app.use("/customer", customerRoutes);
 app.use("/transaction", transactionRoutes);
 app.use(express.static(path.join(__dirname, 'views')));
 
+app.get('/', (req, res) => {
+  const filePath = path.join(__dirname, 'views', 'index.html');
+  res.sendFile(filePath);
+});
+
 const PORT = process.env.PORT || 4500;
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);

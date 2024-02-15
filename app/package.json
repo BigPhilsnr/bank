@@ -15,7 +15,8 @@
     "kafkajs": "^1.15.0",
     "mysql2": "^2.3.0",
     "redis": "^4.6.13",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "node-rdkafka": "^2.18.0"
   },
   "keywords": [
     "bank"

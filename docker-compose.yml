@@ -21,6 +21,8 @@ services:
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_MESSAGE_MAX_BYTES: 2000000000
+     
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -32,7 +34,7 @@ services:
   redis:
     image: "redis:latest"
     ports: 
-      - "6379:6379"
+      - "6381:6379"
     volumes:
       - ./data:/data
 
@@ -42,7 +44,11 @@ services:
       - "4500:4500"
     volumes:
       - ./app:/app
+      - ./wait-for-it.sh:/scripts/wait-for-it.sh
     depends_on:
       - mysql
       - redis
       - kafka
+    command: ["wait-for-it", "mysql:3306", "--", "wait-for-it", "kafka:9092", "--", "nodemon" ]
+ 
+      

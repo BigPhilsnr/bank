@@ -1,8 +1,6 @@
 const { validateDeposit, validateWithdrawal } = require("../services/validationService");
 const { producer, kafka } = require("../services/kafkaService");
 const Account = require("../models/account");
-const depositsConsumer = kafka.consumer({ groupId: "bank" });
-const withdrwalsConsumer = kafka.consumer({ groupId: "bank" });
 
 
 async function deposit(req, res) {
@@ -18,23 +16,34 @@ async function deposit(req, res) {
   if (!isValid) {
     return res.status(400).json({ error: errorMessage });
   }
-  
 
-  await producer.send({
-    topic: "deposit_topic",
-    messages: [
-      {
-        value: JSON.stringify({
-          customer_id: req.body.customer_id,
-          account_id: req.body.account_id,
-          amount,
-        }),
-      },
-    ],
+
+
+  if (!producer.isConnected()) {
+    producer.connect()
+  } else {
+    console.log("Producer is connected")
+  }
+
+  const messagePayload = JSON.stringify({
+    customer_id: req.body.customer_id,
+    account_id: req.body.account_id,
+    amount,
   });
 
+
+
+  // Produce a message to the 'deposit_topic' topic
+  producer.produce('deposit_topic', null, Buffer.from(messagePayload), null, Date.now());
+  if (!producer.isConnected()) {
+    producer.connect()
+  } else {
+    console.log("Producer is connected")
+  }
+
+
   res.json({ message: "Deposit request received. Processing..." });
-  
+
 }
 
 async function withdraw(req, res) {
@@ -66,18 +75,29 @@ async function withdraw(req, res) {
     return res.status(400).json({ error: errorMessage });
   }
 
-  await producer.send({
-    topic: "withdrawal_topic",
-    messages: [
-      {
-        value: JSON.stringify({
-          customer_id: req.body.customer_id,
-          account_id,
-          amount,
-        }),
-      },
-    ],
+
+
+  // Produce a message to the 'withdrawal_topic' topic
+
+  if (!producer.isConnected()) {
+    producer.connect()
+  }
+  const messagePayload = JSON.stringify({
+    customer_id: req.body.customer_id,
+    account_id: req.body.account_id,
+    amount,
   });
+
+  // Produce a message to the 'withdrawal_topic' topic
+  producer.produce('withdrawal_topic', null, Buffer.from(messagePayload), null, Date.now());
+ 
+ // Event handler for the ready event
+ 
+  // Event handler for the event.error event
+  producer.on('event.error', (err) => {
+    console.error('Error from producer:', err);
+  });
+
 
   res.json({ message: "Withdrawal request received. Processing..." });
 }
