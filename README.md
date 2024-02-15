@@ -14,16 +14,15 @@ This is a simple banking application built with Node.js, Express, Sequelize, Red
 ## Prerequisites
 
 Before running the application, ensure you have the following installed:
-
-- Node.js
 - Docker
+Ensure no application is running on port :
 
 ## Setup
 
 1. **Start Docker containers:**
 
     ```
-    docker-compose up -d
+    docker-compose up 
     ```
 
     The application will be running on http://localhost:4500.
