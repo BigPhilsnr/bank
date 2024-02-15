@@ -1,0 +1,36 @@
+# .github/workflows/docker-compose-ci.yml
+
+name: Docker Compose CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:dind
+        ports:
+          - 2375:2375
+        options: --privileged
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        uses: docker/compose-cli@v0.9.10
+
+      - name: Build and Run Docker Compose
+        run: |
+          docker-compose build
+          docker-compose up -d
+          docker-compose ps
+          docker-compose run test npm test
+
+      - name: Clean up Docker Compose
+        run: docker-compose down
