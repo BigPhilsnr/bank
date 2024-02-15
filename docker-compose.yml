@@ -79,3 +79,4 @@ services:
     command: ["wait-for-it", "mysql:3306", "--", "wait-for-it", "kafka:9092", "--" , "npm", "install"]
  
       
+# all internal ports closed for security purposes
