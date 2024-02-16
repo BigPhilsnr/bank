@@ -26,7 +26,7 @@ Before running the application, ensure you have the following installed:
 1. **Start Docker containers:**
 
     ```
-    docker-compose up 
+    docker-compose build && docker-compose up 
     ```
 
     The application will be running on http://localhost:4500.
